@@ -57,3 +57,11 @@ A customer goes to a supermarket and select 1342 products to buy, assuming produ
 
 ● 205 lotions with the price of $12/ per piece with the VAT of: 22%
 
+
+## Expected algorithm
+You need to create an algorithm that takes as an input list of products that the user has bought and calculate for this order: Sub total, VAT, Total. And then based on the government rules generate invoices, depending on what the customer bought it may need to generate 1+ invoice for that order.
+
+## Technology constraints:
+If you are building a frontend project, you need to create this algorithm and create a UI that the customer can simulate the checkout process, selecting products and adding them into the cart and checkout process. As the last step you need to calculate the totals and display the invoices for that order.
+If you are building a backend project, you need to create this algorithm and generate JSON objects for each invoice and order totals. Also define a JSON structure and how to pass the product list to do the calculations
+
