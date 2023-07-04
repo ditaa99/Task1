@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 import './App.css'
 
 const App = () => {
@@ -11,6 +11,10 @@ const App = () => {
 
   // State for storing the list of invoices
   const [invoices, setInvoices] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
+  const [vat, setVat] = useState(0);
+  const [total, setTotal] = useState(0);
+
 
   // Function to handle changes in individual field values of a product
   const handleFieldChange = (index, field, value) => {
@@ -32,84 +36,91 @@ const App = () => {
   };
 
   // Function to calculate the invoices
-const calculateInvoice = () => {
-  let subTotal = 0;
-  let vat = 0;
-  let total = 0;
-
-  const updatedInvoices = [];
-  const groupedProducts = [];
-
-  // Loop through each product to calculate the invoice details and group them by total price and quantity
-  for (let i = 0; i < products.length; i++) {
-    const { quantity, price, discount, vat: vatPercentage } = products[i];
-    const subTotal = price * quantity; //price without taxes
-    const discountAmount = discount * quantity;
-    const vatAmount = ((subTotal - discountAmount) * vatPercentage) / 100;
-    const totalPrice = subTotal + vatAmount; //final price -> with taxes
-
-    vat += vatAmount;
-
-    // Check if there is an existing group with the same total price and quantity
-    const existingGroup = groupedProducts.find(
-      (group) =>
-        group.totalPrice === totalPrice &&
-        group.quantity === quantity &&
-        group.price === price &&
-        group.discount === discount &&
-        group.vatPercentage === vatPercentage
-    );
-
-    // If there is an existing group, add the product description to it
-    if (existingGroup) {
-      existingGroup.descriptions.push(products[i].description);
-    } else {
-      // If there is no existing group, create a new one with the product details
-      groupedProducts.push({
-        descriptions: [products[i].description],
-        quantity,
-        price,
-        discount,
-        vatPercentage,
-        totalPrice,
-        discountAmount,
-        vatAmount,
-      });
-    }
-  }
-
-  // Loop through each grouped product to generate the invoices
-  for (let i = 0; i < groupedProducts.length; i++) {
-    const {
-      descriptions,
-      quantity,
-      price,
-      discountAmount,
-      vatAmount,
-      totalPrice,
-    } = groupedProducts[i];
-
-    // If the quantity is greater than 50 or price is greater than 500, generate multiple invoices
-    if (quantity > 50) {
-      const numInvoices = Math.ceil(quantity / 50);
-      const remainingQuantity = quantity % 50;
-
-      // Generate invoices for each batch of 50 or remaining quantity
-      for (let j = 1; j <= numInvoices; j++) {
-        const invoiceQuantity = j === numInvoices ? remainingQuantity : 50;
-        const invoiceTotal = price * invoiceQuantity;
-
-        updatedInvoices.push({
-          description: descriptions.join(", "),
-          quantity: invoiceQuantity,
+  const calculateInvoice = () => {
+    let subTotal = 0;
+    let vat = 0;
+    let total = 0;
+  
+    const updatedInvoices = [];
+    const groupedProducts = [];
+  
+    // Loop through each product to calculate the invoice details and group them by total price and quantity
+    for (let i = 0; i < products.length; i++) {
+      const { description, quantity, price, discount, vat: vatPercentage } = products[i];
+      const productSubTotal = price * quantity; // price without taxes
+      const discountAmount = discount * quantity;
+      const vatAmount = ((productSubTotal - discountAmount) * vatPercentage) / 100;
+      const totalPrice = productSubTotal + vatAmount; // final price -> with taxes
+  
+      subTotal += productSubTotal;
+      vat += vatAmount;
+  
+      // Check if there is an existing group with the same description
+      const existingGroup = groupedProducts.find(
+        (group) => group.descriptions[0] === description
+      );
+      
+  
+      // If there is an existing group, add the product description to it
+      if (existingGroup) {
+        existingGroup.descriptions.push(description);
+      } else {
+        // If there is no existing group, create a new one with the product details
+        groupedProducts.push({
+          descriptions: [description],
+          quantity,
           price,
-          discount: discountAmount / quantity,
-          vat: vatAmount / quantity,
-          total: invoiceTotal,
+          discount,
+          vatPercentage,
+          totalPrice,
+          discountAmount,
+          vatAmount,
         });
       }
-    } else {
-      if (price > 500) {
+    }
+  
+    setSubTotal(subTotal);
+    setVat(vat);
+    setTotal(total);
+  
+    // Loop through each grouped product to generate the invoices
+    for (let i = 0; i < groupedProducts.length; i++) {
+      const {
+        descriptions,
+        quantity,
+        price,
+        discountAmount,
+        vatAmount,
+        totalPrice,
+      } = groupedProducts[i];
+  
+      // Create a new invoice for each product if the quantity is greater than 50 or price is greater than 500
+      if (quantity > 50 || price > 500) {
+        const invoices = [];
+        let currentQuantity = quantity;
+        let currentTotal = totalPrice;
+  
+        while (currentQuantity > 0) {
+          const invoiceQuantity = Math.min(currentQuantity, 50);
+          const invoiceTotal = price * invoiceQuantity + vatAmount * invoiceQuantity / quantity;
+  
+          invoices.push({
+            description: descriptions.join(", "),
+            quantity: invoiceQuantity,
+            price,
+            discount: discountAmount / quantity,
+            vat: vatAmount / quantity,
+            total: invoiceTotal,
+          });
+  
+          currentQuantity -= invoiceQuantity;
+          currentTotal -= invoiceTotal;
+          total += invoiceTotal; // Update total with correct VAT amount for each invoice generated
+        }
+  
+        updatedInvoices.push(...invoices);
+      } else {
+        // Add the product to the existing invoice if the quantity is less than or equal to 50 and price less than or equal to 500
         updatedInvoices.push({
           description: descriptions.join(", "),
           quantity,
@@ -118,29 +129,16 @@ const calculateInvoice = () => {
           vat: vatAmount / quantity,
           total: totalPrice,
         });
-      } else{
-      // Generate invoice for the quantity less than or equal to 50 and price less than or equal to 500
-      updatedInvoices.push({
-        description: descriptions.join(", "),
-        quantity,
-        price,
-        discount: discountAmount / quantity,
-        vat: vatAmount / quantity,
-        total: totalPrice,
-      });
+      }
     }
-    }
-  }
-
-  total = subTotal + vat;
-
-  setInvoices(updatedInvoices);
-
-  return total; // Use the total variable to return the final invoice amount
+  
+    total = subTotal + vat;
+  
+    setInvoices(updatedInvoices);
+  
+    return total; // Use the total variable to return the final invoice amount
 };
 
-
-  
 
   return (
     <div>
@@ -148,15 +146,15 @@ const calculateInvoice = () => {
 
       <h2>Product List</h2>
       <table id="product-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Discount</th>
-            <th>VAT</th>
-          </tr>
-        </thead>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Discount</th>
+          <th>VAT (%)</th>
+        </tr>
+      </thead>
         <tbody>
           {products.map((product, index) => (
             <tr key={index}>
@@ -197,8 +195,10 @@ const calculateInvoice = () => {
                   onChange={(e) => handleFieldChange(index, "vat", e.target.value)}
                 />
               </td>
+
             </tr>
           ))}
+        
         </tbody>
       </table>
 
@@ -221,6 +221,7 @@ const calculateInvoice = () => {
           </div>
         ))}
       </div>
+
     </div>
   );
 };
