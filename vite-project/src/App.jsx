@@ -6,7 +6,7 @@ import './App.css'
 const App = () => {
   // State for storing the list of products
   const [products, setProducts] = useState([
-    { description: "", quantity: 0, price: 0, discount: 0, vat: 0 },
+    { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
   ]);
 
   // State for storing the list of invoices
@@ -32,7 +32,7 @@ const App = () => {
 
   // Function to add a new product
   const handleAddProduct = () => {
-    setProducts([...products, { description: "", quantity: 0, price: 0, discount: 0, vat: 0 }]);
+    setProducts([...products, { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 }]);
   };
 
   // Function to calculate the invoices
