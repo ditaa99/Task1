@@ -1,7 +1,5 @@
 import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './components/Invoice'
+import Invoice from './components/Invoice'
 import './App.css'
 
 const App = () => {
@@ -212,18 +210,10 @@ const App = () => {
 
       <h2>Invoices</h2>
       <div id="invoice-list">
-        {invoices.map((invoice, index) => (
-          <div key={index}>
-            <h3>Invoice {index + 1}</h3>
-            <p>Description: {invoice.description}</p>
-            <p>Quantity: {invoice.quantity}</p>
-            <p>Price: {invoice.price}</p>
-            <p>Discount: {invoice.discount}</p>
-            <p>VAT: {invoice.vat}</p>
-            <p>Total: {invoice.total}</p>
-            <hr />
-          </div>
-        ))}
+      {invoices.map((invoice, index) => (
+        <Invoice key={index} invoice={{ ...invoice, index }} />
+      ))}
+
       </div>
 
     </div>
