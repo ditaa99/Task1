@@ -1,6 +1,7 @@
 import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
+import './components/Invoice'
 import './App.css'
 
 const App = () => {
@@ -22,13 +23,6 @@ const App = () => {
     updatedProducts[index] = { ...updatedProducts[index], [field]: value };
     setProducts(updatedProducts);
   };
-
-  // Function to handle changes in the quantity of a product
-  // const handleQuantityChange = (index, value) => {
-  //   const updatedProducts = [...products];
-  //   updatedProducts[index].quantity = parseInt(value, 10);
-  //   setProducts(updatedProducts);
-  // };
 
   // Function to add a new product
   const handleAddProduct = () => {
