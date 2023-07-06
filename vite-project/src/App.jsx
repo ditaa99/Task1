@@ -24,15 +24,21 @@ const App = () => {
   };
 
   // Function to handle changes in the quantity of a product
-  const handleQuantityChange = (index, value) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].quantity = parseInt(value, 10);
-    setProducts(updatedProducts);
-  };
+  // const handleQuantityChange = (index, value) => {
+  //   const updatedProducts = [...products];
+  //   updatedProducts[index].quantity = parseInt(value, 10);
+  //   setProducts(updatedProducts);
+  // };
 
   // Function to add a new product
   const handleAddProduct = () => {
     setProducts([...products, { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 }]);
+  };
+
+  const handleDeleteProduct = (index) => {
+    const updatedProducts = [...products];
+    updatedProducts.splice(index, 1);
+    setProducts(updatedProducts);
   };
 
   // Function to calculate the invoices
@@ -169,7 +175,7 @@ const App = () => {
                 <input
                   type="number"
                   value={product.quantity}
-                  onChange={(e) => handleQuantityChange(index, e.target.value)}
+                  onChange={(e) => handleFieldChange(index, "quantity", e.target.value)}
                 />
               </td>
               <td>
@@ -194,6 +200,10 @@ const App = () => {
                   step="0.01"
                   onChange={(e) => handleFieldChange(index, "vat", e.target.value)}
                 />
+              </td>
+
+              <td>
+                <button class="del" onClick={() => handleDeleteProduct(index)}>Delete</button>
               </td>
 
             </tr>

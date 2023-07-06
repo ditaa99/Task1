@@ -28,15 +28,14 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  background-color: #b1b0b0;
+  margin: 0.5rem;
 }
 button:hover {
-  border-color: #1119a8;
+  border-color: #1f1f21;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -44,4 +43,4 @@ button:hover {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
