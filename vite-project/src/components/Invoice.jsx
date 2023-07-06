@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Invoice = ({ index, invoice }) => {
+const Invoice = (props) => {
+  const { index, invoice } = props;
+  console.log({props})
   return (
-    <div key={index}>
+    <div>
       <h3>Invoice {index + 1}</h3>
       <p>Description: {invoice.description}</p>
       <p>Quantity: {invoice.quantity}</p>

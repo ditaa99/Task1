@@ -157,7 +157,7 @@ const App = () => {
           {products.map((product, index) => (
             <tr key={index}>
               <td>
-                <input
+               + <input
                   type="text"
                   value={product.description}
                   onChange={(e) => handleFieldChange(index, "description", e.target.value)}
@@ -195,7 +195,7 @@ const App = () => {
               </td>
 
               <td>
-                <button class="del" onClick={() => handleDeleteProduct(index)}>Delete</button>
+                <button className="del" onClick={() => handleDeleteProduct(index)}>Delete</button>
               </td>
 
             </tr>
@@ -205,13 +205,12 @@ const App = () => {
       </table>
 
       <button onClick={handleAddProduct}>Add Product</button>
-
       <button onClick={calculateInvoice}>Calculate Invoice</button>
 
       <h2>Invoices</h2>
       <div id="invoice-list">
       {invoices.map((invoice, index) => (
-        <Invoice key={index} invoice={{ ...invoice, index }} />
+        <Invoice key={index} invoice={invoice} index={index} />
       ))}
 
       </div>
@@ -221,3 +220,5 @@ const App = () => {
 };
 
 export default App;
+
+// krejt cka jon reusable mi bo components: inputat, butonat
