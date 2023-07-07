@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import Invoice from './components/Invoice'
-import Input from './components/Input'
-import Buttons from './components/Buttons'
+import { useState } from "react";
+import "./App.css";
+import Invoice from "./components/Invoice";
+import Input from "./components/Input";
+import Buttons from "./components/Buttons";
 const App = () => {
   // State for storing the list of products
   const [products, setProducts] = useState([
@@ -15,7 +15,6 @@ const App = () => {
   const [vat, setVat] = useState(0);
   const [total, setTotal] = useState(0);
 
-
   // Function to handle changes in individual field values of a product
   const handleFieldChange = (index, field, value) => {
     const updatedProducts = [...products];
@@ -25,7 +24,10 @@ const App = () => {
 
   // Function to add a new product
   const handleAddProduct = () => {
-    setProducts([...products, { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 }]);
+    setProducts([
+      ...products,
+      { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
+    ]);
   };
 
   const handleDeleteProduct = (index) => {
@@ -39,27 +41,33 @@ const App = () => {
     let subTotal = 0;
     let vat = 0;
     let total = 0;
-  
+
     const updatedInvoices = [];
     const groupedProducts = [];
-  
+
     // Loop through each product to calculate the invoice details and group them by total price and quantity
     for (let i = 0; i < products.length; i++) {
-      const { description, quantity, price, discount, vat: vatPercentage } = products[i];
+      const {
+        description,
+        quantity,
+        price,
+        discount,
+        vat: vatPercentage,
+      } = products[i];
       const productSubTotal = price * quantity; // price without taxes
       const discountAmount = discount * quantity;
-      const vatAmount = ((productSubTotal - discountAmount) * vatPercentage) / 100;
+      const vatAmount =
+        ((productSubTotal - discountAmount) * vatPercentage) / 100;
       const totalPrice = productSubTotal + vatAmount; // final price -> with taxes
-  
+
       subTotal += productSubTotal;
       vat += vatAmount;
-  
+
       // Check if there is an existing group with the same description
       const existingGroup = groupedProducts.find(
         (group) => group.descriptions[0] === description
       );
-      
-  
+
       // If there is an existing group, add the product description to it
       if (existingGroup) {
         existingGroup.descriptions.push(description);
@@ -77,11 +85,11 @@ const App = () => {
         });
       }
     }
-  
+
     setSubTotal(subTotal);
     setVat(vat);
     setTotal(total);
-  
+
     // Loop through each grouped product to generate the invoices
     for (let i = 0; i < groupedProducts.length; i++) {
       const {
@@ -92,17 +100,18 @@ const App = () => {
         vatAmount,
         totalPrice,
       } = groupedProducts[i];
-  
+
       // Create a new invoice for each product if the quantity is greater than 50 or price is greater than 500
       if (quantity > 50 || price > 500) {
         const invoices = [];
         let currentQuantity = quantity;
         let currentTotal = totalPrice;
-  
+
         while (currentQuantity > 0) {
           const invoiceQuantity = Math.min(currentQuantity, 50);
-          const invoiceTotal = price * invoiceQuantity + vatAmount * invoiceQuantity / quantity;
-  
+          const invoiceTotal =
+            price * invoiceQuantity + (vatAmount * invoiceQuantity) / quantity;
+
           invoices.push({
             description: descriptions.join(", "),
             quantity: invoiceQuantity,
@@ -111,12 +120,12 @@ const App = () => {
             vat: vatAmount / quantity,
             total: invoiceTotal,
           });
-  
+
           currentQuantity -= invoiceQuantity;
           currentTotal -= invoiceTotal;
           total += invoiceTotal; // Update total with correct VAT amount for each invoice generated
         }
-  
+
         updatedInvoices.push(...invoices);
       } else {
         // Add the product to the existing invoice if the quantity is less than or equal to 50 and price less than or equal to 500
@@ -130,14 +139,13 @@ const App = () => {
         });
       }
     }
-  
-    total = subTotal + vat;
-  
-    setInvoices(updatedInvoices);
-  
-    return total; // Use the total variable to return the final invoice amount
-};
 
+    total = subTotal + vat;
+
+    setInvoices(updatedInvoices);
+
+    return total; // Use the total variable to return the final invoice amount
+  };
 
   return (
     <div>
@@ -145,15 +153,15 @@ const App = () => {
 
       <h2>Product List</h2>
       <table id="product-table">
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Discount</th>
-          <th>VAT (%)</th>
-        </tr>
-      </thead>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>VAT (%)</th>
+          </tr>
+        </thead>
         <tbody>
           {products.map((product, index) => (
             <tr key={index}>
@@ -161,33 +169,43 @@ const App = () => {
                 <Input
                   type="text"
                   value={product.description}
-                  onChange={(e) => handleFieldChange(index, 'description', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, "description", e.target.value)
+                  }
                 />
               </td>
               <td>
                 <Input
                   value={product.quantity}
-                  onChange={(e) => handleFieldChange(index, 'quantity', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, "quantity", e.target.value)
+                  }
                 />
               </td>
               <td>
                 <Input
                   value={product.price}
                   step="0.01"
-                  onChange={(e) => handleFieldChange(index, 'price', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, "price", e.target.value)
+                  }
                 />
               </td>
               <td>
                 <Input
                   value={product.discount}
-                  onChange={(e) => handleFieldChange(index, 'discount', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, "discount", e.target.value)
+                  }
                 />
               </td>
               <td>
                 <Input
                   value={product.vat}
                   step="0.01"
-                  onChange={(e) => handleFieldChange(index, 'vat', e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange(index, "vat", e.target.value)
+                  }
                 />
               </td>
 
@@ -198,34 +216,22 @@ const App = () => {
                   text="Delete"
                 />
               </td>
-
             </tr>
           ))}
-        
         </tbody>
       </table>
 
-      <Buttons
-        onClick={handleAddProduct}
-        text="Add Product"
-      />
-      <Buttons
-        onClick={calculateInvoice}
-        text="Calculate Invoice"
-      />
+      <Buttons onClick={handleAddProduct} text="Add Product" />
+      <Buttons onClick={calculateInvoice} text="Calculate Invoice" />
 
       <h2>Invoices</h2>
       <div id="invoice-list">
-      {invoices.map((invoice, index) => (
-        <Invoice key={index} invoice={invoice} index={index} />
-      ))}
-
+        {invoices.map((invoice, index) => (
+          <Invoice key={index} invoice={invoice} index={index} />
+        ))}
       </div>
-
     </div>
   );
 };
 
 export default App;
-
-// krejt cka jon reusable mi bo components: inputat, butonat

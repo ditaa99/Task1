@@ -1,8 +1,6 @@
-.del{
-    background-color: rgba(226, 24, 24, 0.911);
+.del {
+  background-color: rgba(226, 24, 24, 0.911);
 }
 .del:hover {
-    border-color: rgb(177, 4, 4);
-  }
-
-
+  border-color: rgb(177, 4, 4);
+}
