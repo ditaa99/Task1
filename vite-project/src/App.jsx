@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import Invoice from './components/Invoice'
 import './App.css'
-
+import Invoice from './components/Invoice'
+import Input from './components/Input'
+import Buttons from './components/Buttons'
 const App = () => {
   // State for storing the list of products
   const [products, setProducts] = useState([
@@ -157,45 +158,45 @@ const App = () => {
           {products.map((product, index) => (
             <tr key={index}>
               <td>
-               + <input
+                <Input
                   type="text"
                   value={product.description}
-                  onChange={(e) => handleFieldChange(index, "description", e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'description', e.target.value)}
                 />
               </td>
               <td>
-                <input
-                  type="number"
+                <Input
                   value={product.quantity}
-                  onChange={(e) => handleFieldChange(index, "quantity", e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'quantity', e.target.value)}
                 />
               </td>
               <td>
-                <input
-                  type="number"
+                <Input
                   value={product.price}
                   step="0.01"
-                  onChange={(e) => handleFieldChange(index, "price", e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'price', e.target.value)}
                 />
               </td>
               <td>
-                <input
-                  type="number"
+                <Input
                   value={product.discount}
-                  onChange={(e) => handleFieldChange(index, "discount", e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'discount', e.target.value)}
                 />
               </td>
               <td>
-                <input
-                  type="number"
+                <Input
                   value={product.vat}
                   step="0.01"
-                  onChange={(e) => handleFieldChange(index, "vat", e.target.value)}
+                  onChange={(e) => handleFieldChange(index, 'vat', e.target.value)}
                 />
               </td>
 
               <td>
-                <button className="del" onClick={() => handleDeleteProduct(index)}>Delete</button>
+                <Buttons
+                  className="del"
+                  onClick={handleDeleteProduct}
+                  text="Delete"
+                />
               </td>
 
             </tr>
@@ -204,8 +205,14 @@ const App = () => {
         </tbody>
       </table>
 
-      <button onClick={handleAddProduct}>Add Product</button>
-      <button onClick={calculateInvoice}>Calculate Invoice</button>
+      <Buttons
+        onClick={handleAddProduct}
+        text="Add Product"
+      />
+      <Buttons
+        onClick={calculateInvoice}
+        text="Calculate Invoice"
+      />
 
       <h2>Invoices</h2>
       <div id="invoice-list">
