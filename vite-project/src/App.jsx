@@ -3,6 +3,7 @@ import "./App.css";
 import Invoice from "./components/Invoice";
 import Input from "./components/Input";
 import Buttons from "./components/Buttons";
+import {calculateInvoice} from "./components/CalculateInvoice";
 const App = () => {
   // State for storing the list of products
   const [products, setProducts] = useState([
@@ -11,9 +12,6 @@ const App = () => {
 
   // State for storing the list of invoices
   const [invoices, setInvoices] = useState([]);
-  const [subTotal, setSubTotal] = useState(0);
-  const [vat, setVat] = useState(0);
-  const [total, setTotal] = useState(0);
 
   // Function to handle changes in individual field values of a product
   const handleFieldChange = (index, field, value) => {
@@ -37,7 +35,7 @@ const App = () => {
   };
 
   // Function to calculate the invoices
-  const calculateInvoice = () => {
+  /*const calculateInvoice = () => {
     let subTotal = 0;
     let vat = 0;
     let total = 0;
@@ -145,7 +143,7 @@ const App = () => {
     setInvoices(updatedInvoices);
 
     return total; // Use the total variable to return the final invoice amount
-  };
+  };*/
 
   return (
     <div>
@@ -222,7 +220,7 @@ const App = () => {
       </table>
 
       <Buttons onClick={handleAddProduct} text="Add Product" />
-      <Buttons onClick={calculateInvoice} text="Calculate Invoice" />
+      <Buttons onClick={() => calculateInvoice(products, setInvoices)} text="Calculate Invoice" />
 
       <h2>Invoices</h2>
       <div id="invoice-list">
