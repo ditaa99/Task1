@@ -117,10 +117,11 @@ const App = () => {
       </div>
 
       <Routes>
-        {/* <Route path="/" element = {<App />}  /> */}
         <Route
           path="/invoices"
-          element={<CalculateInvoice products={products} setInvoices={setInvoices} />}
+          element={
+            <CalculateInvoice products={products} setInvoices={setInvoices} />
+          }
         />
       </Routes>
     </div>

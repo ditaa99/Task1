@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const CalculateInvoice = (props) => {
   const { products, setInvoices } = props;
@@ -20,7 +20,8 @@ const CalculateInvoice = (props) => {
     } = products[i];
     const productSubTotal = price * quantity;
     const discountAmount = discount * quantity;
-    const vatAmount = ((productSubTotal - discountAmount) * vatPercentage) / 100;
+    const vatAmount =
+      ((productSubTotal - discountAmount) * vatPercentage) / 100;
     const totalPrice = productSubTotal + vatAmount;
 
     subTotal += productSubTotal;
@@ -100,6 +101,24 @@ const CalculateInvoice = (props) => {
   }, [setInvoices, updatedInvoices]);
 
   return <h3>Total: {total}</h3>;
+
+  /*return (
+    <div>
+      <h2>Calculated Invoices</h2>
+      {invoices.map((invoice, index) => (
+        <div key={index}>
+          <p>Description: {invoice.description}</p>
+          <p>Quantity: {invoice.quantity}</p>
+          <p>Price: {invoice.price}</p>
+          <p>Discount: {invoice.discount}</p>
+          <p>VAT: {invoice.vat}</p>
+          <p>Total: {invoice.total}</p>
+          <hr />
+        </div>
+      ))}
+      <h3>Total: {total}</h3>
+    </div>
+  ); */
 };
 
 export default CalculateInvoice;
