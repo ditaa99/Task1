@@ -1,6 +1,8 @@
-// Function to calculate the invoices
-export const calculateInvoice = (products, setInvoices) => {
-  console.log({ setInvoices });
+import { useEffect } from 'react';
+
+const CalculateInvoice = (props) => {
+  const { products, setInvoices } = props;
+
   let subTotal = 0;
   let vat = 0;
   let total = 0;
@@ -8,7 +10,6 @@ export const calculateInvoice = (products, setInvoices) => {
   const updatedInvoices = [];
   const groupedProducts = [];
 
-  // Loop through each product to calculate the invoice details and group them by total price and quantity
   for (let i = 0; i < products.length; i++) {
     const {
       description,
@@ -17,25 +18,21 @@ export const calculateInvoice = (products, setInvoices) => {
       discount,
       vat: vatPercentage,
     } = products[i];
-    const productSubTotal = price * quantity; // price without taxes
+    const productSubTotal = price * quantity;
     const discountAmount = discount * quantity;
-    const vatAmount =
-      ((productSubTotal - discountAmount) * vatPercentage) / 100;
-    const totalPrice = productSubTotal + vatAmount; // final price -> with taxes
+    const vatAmount = ((productSubTotal - discountAmount) * vatPercentage) / 100;
+    const totalPrice = productSubTotal + vatAmount;
 
     subTotal += productSubTotal;
     vat += vatAmount;
 
-    // Check if there is an existing group with the same description
     const existingGroup = groupedProducts.find(
       (group) => group.descriptions[0] === description
     );
 
-    // If there is an existing group, add the product description to it
     if (existingGroup) {
       existingGroup.descriptions.push(description);
     } else {
-      // If there is no existing group, create a new one with the product details
       groupedProducts.push({
         descriptions: [description],
         quantity,
@@ -49,11 +46,6 @@ export const calculateInvoice = (products, setInvoices) => {
     }
   }
 
-  // setSubTotal(subTotal);
-  // setVat(vat);
-  // setTotal(total);
-
-  // Loop through each grouped product to generate the invoices
   for (let i = 0; i < groupedProducts.length; i++) {
     const {
       descriptions,
@@ -64,7 +56,6 @@ export const calculateInvoice = (products, setInvoices) => {
       totalPrice,
     } = groupedProducts[i];
 
-    // Create a new invoice for each product if the quantity is greater than 50 or price is greater than 500
     if (quantity > 50 || price > 500) {
       const invoices = [];
       let currentQuantity = quantity;
@@ -86,12 +77,11 @@ export const calculateInvoice = (products, setInvoices) => {
 
         currentQuantity -= invoiceQuantity;
         currentTotal -= invoiceTotal;
-        total += invoiceTotal; // Update total with correct VAT amount for each invoice generated
+        total += invoiceTotal;
       }
 
       updatedInvoices.push(...invoices);
     } else {
-      // Add the product to the existing invoice if the quantity is less than or equal to 50 and price less than or equal to 500
       updatedInvoices.push({
         description: descriptions.join(", "),
         quantity,
@@ -105,7 +95,11 @@ export const calculateInvoice = (products, setInvoices) => {
 
   total = subTotal + vat;
 
-  setInvoices(updatedInvoices);
+  useEffect(() => {
+    setInvoices(updatedInvoices);
+  }, [setInvoices, updatedInvoices]);
 
-  return total; // Use the total variable to return the final invoice amount
+  return <h3>Total: {total}</h3>;
 };
+
+export default CalculateInvoice;

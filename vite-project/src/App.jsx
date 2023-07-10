@@ -1,26 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Invoice from "./components/Invoice";
 import Input from "./components/Input";
 import Buttons from "./components/Buttons";
-import {calculateInvoice} from "./components/CalculateInvoice";
+import CalculateInvoice from "./components/calculateInvoice";
+
 const App = () => {
-  // State for storing the list of products
   const [products, setProducts] = useState([
     { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
   ]);
-
-  // State for storing the list of invoices
   const [invoices, setInvoices] = useState([]);
+  const navigate = useNavigate();
 
-  // Function to handle changes in individual field values of a product
   const handleFieldChange = (index, field, value) => {
     const updatedProducts = [...products];
     updatedProducts[index] = { ...updatedProducts[index], [field]: value };
     setProducts(updatedProducts);
   };
 
-  // Function to add a new product
   const handleAddProduct = () => {
     setProducts([
       ...products,
@@ -33,117 +31,6 @@ const App = () => {
     updatedProducts.splice(index, 1);
     setProducts(updatedProducts);
   };
-
-  // Function to calculate the invoices
-  /*const calculateInvoice = () => {
-    let subTotal = 0;
-    let vat = 0;
-    let total = 0;
-
-    const updatedInvoices = [];
-    const groupedProducts = [];
-
-    // Loop through each product to calculate the invoice details and group them by total price and quantity
-    for (let i = 0; i < products.length; i++) {
-      const {
-        description,
-        quantity,
-        price,
-        discount,
-        vat: vatPercentage,
-      } = products[i];
-      const productSubTotal = price * quantity; // price without taxes
-      const discountAmount = discount * quantity;
-      const vatAmount =
-        ((productSubTotal - discountAmount) * vatPercentage) / 100;
-      const totalPrice = productSubTotal + vatAmount; // final price -> with taxes
-
-      subTotal += productSubTotal;
-      vat += vatAmount;
-
-      // Check if there is an existing group with the same description
-      const existingGroup = groupedProducts.find(
-        (group) => group.descriptions[0] === description
-      );
-
-      // If there is an existing group, add the product description to it
-      if (existingGroup) {
-        existingGroup.descriptions.push(description);
-      } else {
-        // If there is no existing group, create a new one with the product details
-        groupedProducts.push({
-          descriptions: [description],
-          quantity,
-          price,
-          discount,
-          vatPercentage,
-          totalPrice,
-          discountAmount,
-          vatAmount,
-        });
-      }
-    }
-
-    setSubTotal(subTotal);
-    setVat(vat);
-    setTotal(total);
-
-    // Loop through each grouped product to generate the invoices
-    for (let i = 0; i < groupedProducts.length; i++) {
-      const {
-        descriptions,
-        quantity,
-        price,
-        discountAmount,
-        vatAmount,
-        totalPrice,
-      } = groupedProducts[i];
-
-      // Create a new invoice for each product if the quantity is greater than 50 or price is greater than 500
-      if (quantity > 50 || price > 500) {
-        const invoices = [];
-        let currentQuantity = quantity;
-        let currentTotal = totalPrice;
-
-        while (currentQuantity > 0) {
-          const invoiceQuantity = Math.min(currentQuantity, 50);
-          const invoiceTotal =
-            price * invoiceQuantity + (vatAmount * invoiceQuantity) / quantity;
-
-          invoices.push({
-            description: descriptions.join(", "),
-            quantity: invoiceQuantity,
-            price,
-            discount: discountAmount / quantity,
-            vat: vatAmount / quantity,
-            total: invoiceTotal,
-          });
-
-          currentQuantity -= invoiceQuantity;
-          currentTotal -= invoiceTotal;
-          total += invoiceTotal; // Update total with correct VAT amount for each invoice generated
-        }
-
-        updatedInvoices.push(...invoices);
-      } else {
-        // Add the product to the existing invoice if the quantity is less than or equal to 50 and price less than or equal to 500
-        updatedInvoices.push({
-          description: descriptions.join(", "),
-          quantity,
-          price,
-          discount: discountAmount / quantity,
-          vat: vatAmount / quantity,
-          total: totalPrice,
-        });
-      }
-    }
-
-    total = subTotal + vat;
-
-    setInvoices(updatedInvoices);
-
-    return total; // Use the total variable to return the final invoice amount
-  };*/
 
   return (
     <div>
@@ -158,6 +45,7 @@ const App = () => {
             <th>Price</th>
             <th>Discount</th>
             <th>VAT (%)</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -206,11 +94,10 @@ const App = () => {
                   }
                 />
               </td>
-
               <td>
                 <Buttons
                   className="del"
-                  onClick={handleDeleteProduct}
+                  onClick={() => handleDeleteProduct(index)}
                   text="Delete"
                 />
               </td>
@@ -220,7 +107,7 @@ const App = () => {
       </table>
 
       <Buttons onClick={handleAddProduct} text="Add Product" />
-      <Buttons onClick={() => calculateInvoice(products, setInvoices)} text="Calculate Invoice" />
+      <Buttons onClick={() => navigate("/invoices")} text="Calculate Invoice" />
 
       <h2>Invoices</h2>
       <div id="invoice-list">
@@ -228,6 +115,14 @@ const App = () => {
           <Invoice key={index} invoice={invoice} index={index} />
         ))}
       </div>
+
+      <Routes>
+        {/* <Route path="/" element = {<App />}  /> */}
+        <Route
+          path="/invoices"
+          element={<CalculateInvoice products={products} setInvoices={setInvoices} />}
+        />
+      </Routes>
     </div>
   );
 };
