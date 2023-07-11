@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const CalculateInvoice = (props) => {
+const InvoiceCalculator = (props) => {
   const { products, setInvoices } = props;
 
   let subTotal = 0;
@@ -121,4 +121,4 @@ const CalculateInvoice = (props) => {
   ); */
 };
 
-export default CalculateInvoice;
+export default InvoiceCalculator;

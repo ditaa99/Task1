@@ -4,7 +4,7 @@ import "./App.css";
 import Invoice from "./components/Invoice";
 import Input from "./components/Input";
 import Buttons from "./components/Buttons";
-import CalculateInvoice from "./components/calculateInvoice";
+import InvoiceCalculator from "./components/InvoiceCalculator";
 
 const App = () => {
   const [products, setProducts] = useState([
@@ -120,7 +120,7 @@ const App = () => {
         <Route
           path="/invoices"
           element={
-            <CalculateInvoice products={products} setInvoices={setInvoices} />
+            <InvoiceCalculator products={products} setInvoices={setInvoices} />
           }
         />
       </Routes>
