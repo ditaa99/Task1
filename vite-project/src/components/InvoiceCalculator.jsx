@@ -29,7 +29,12 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
       let remainingQuantity = quantity;
 
       while (remainingQuantity > 0) {
-        if (!currentInvoice || currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50 || currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 || totalPrice > 500) {
+        if (
+          !currentInvoice ||
+          currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50 ||
+          currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 ||
+          totalPrice > 500
+        ) {
           // Create a new invoice if the current one is full or the price exceeds the limit
           currentInvoice = {
             descriptions: [],
@@ -42,14 +47,21 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
           invoices.push(currentInvoice);
         }
 
-        const addToInvoice = Math.min(remainingQuantity, totalPrice > 500 ? remainingQuantity : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0));
+        const addToInvoice = Math.min(
+          remainingQuantity,
+          totalPrice > 500
+            ? remainingQuantity
+            : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0)
+        );
 
         currentInvoice.descriptions.push(description);
         currentInvoice.quantity.push(addToInvoice);
         currentInvoice.price.push(price);
-        currentInvoice.discountAmount.push((discountAmount / quantity) * addToInvoice);
+        currentInvoice.discountAmount.push(
+          (discountAmount / quantity) * addToInvoice
+        );
         currentInvoice.vatAmount.push((vatAmount / quantity) * addToInvoice);
-        currentInvoice.totalPrice.push(totalPrice / quantity * addToInvoice);
+        currentInvoice.totalPrice.push((totalPrice / quantity) * addToInvoice);
 
         remainingQuantity -= addToInvoice;
       }
@@ -69,6 +81,8 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
 
   const { invoices, total } = calculateInvoices(products);
 
+  /*the useEffect hook is used to update the invoices state variable whenever it changes. It has two dependencies specified: 
+  setInvoices and invoices. Whenever either of these dependencies changes, the effect will be triggered.*/
   useEffect(() => {
     setInvoices(invoices);
   }, [setInvoices, invoices]);
@@ -90,6 +104,8 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
               <hr />
             </div>
           ))}
+          <h4>Invoice total: {invoice.totalPrice.reduce((a, b) => a + b)}</h4>
+          <hr />
         </div>
       ))}
       <h3>Total: {total}</h3>
