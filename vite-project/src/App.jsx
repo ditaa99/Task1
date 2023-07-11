@@ -108,13 +108,13 @@ const App = () => {
 
       <Buttons onClick={handleAddProduct} text="Add Product" />
       <Buttons onClick={() => navigate("/invoices")} text="Calculate Invoice" />
-
+{/* 
       <h2>Invoices</h2>
       <div id="invoice-list">
         {invoices.map((invoice, index) => (
           <Invoice key={index} invoice={invoice} index={index} />
         ))}
-      </div>
+      </div> */}
 
       <Routes>
         <Route
