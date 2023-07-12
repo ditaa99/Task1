@@ -35,7 +35,7 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
         if (
           !currentInvoice ||
           currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50 ||
-          // currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 ||
+          // currentInvoice.totalPrice.reduce((a, b) => a + b, 0) + totalPrice > 500 ||
           totalPrice > 500
         ) {
           // Create a new invoice if the current one is full or the price exceeds the limit
@@ -56,6 +56,13 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
             ? remainingQuantity
             : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0)
         );
+        // const addToInvoice = Math.min(
+        //   remainingQuantity,
+        //   currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50
+        //     ? 0
+        //     : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0),
+        //   totalPrice > 500 ? remainingQuantity : Infinity
+        // ); 
 
         currentInvoice.descriptions.push(description);
         currentInvoice.quantity.push(addToInvoice);
