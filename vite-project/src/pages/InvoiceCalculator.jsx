@@ -35,7 +35,7 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
         if (
           !currentInvoice ||
           currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50 ||
-          currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 ||
+          // currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 ||
           totalPrice > 500
         ) {
           // Create a new invoice if the current one is full or the price exceeds the limit
@@ -94,10 +94,9 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
 
   return (
     <div className="invoicestyle">
-
       <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (
-          <Invoice index={index} invoice={invoice} />
+        <Invoice index={index} invoice={invoice} />
       ))}
       <h3>Total: {total}</h3>
       <Buttons onClick={() => navigate("/")} text="Go Back" />
