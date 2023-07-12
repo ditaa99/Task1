@@ -26,7 +26,7 @@ const HomePage = ({ products, setProducts }) => {
   };
 
   return (
-    <div>
+    <div className={products.length === 0 ? "homepage pempty" : "homepage"}>
       <h1>Invoice Calculator</h1>
 
       <h2>Product List</h2>
@@ -102,13 +102,6 @@ const HomePage = ({ products, setProducts }) => {
       <Buttons onClick={handleAddProduct} text="Add Product" />
       <Buttons onClick={() => navigate("/invoices")} text="Calculate Invoice" />
 
-      {/* 
-      <h2>Invoices</h2>
-      <div id="invoice-list">
-        {invoices.map((invoice, index) => (
-          <Invoice key={index} invoice={invoice} index={index} />
-        ))}
-      </div> */}
     </div>
   );
 };
