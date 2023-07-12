@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Invoice from "../components/Invoice";
 import Input from "../components/Input";
 import Buttons from "../components/Buttons";
 

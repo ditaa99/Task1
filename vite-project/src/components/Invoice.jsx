@@ -5,10 +5,10 @@ const Invoice = (props) => {
   console.log({ props });
   return (
     <div>
-      <h2>Calculated Invoices</h2>
+      <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (
         <div key={index}>
-          <h3>Invoice {index + 1}</h3>
+          <h2>Invoice {index + 1}</h2>
           {invoice.descriptions.map((description, i) => (
             <div key={i}>
               <p>Description: {description}</p>

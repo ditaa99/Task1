@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Invoice from "../components/Invoice";
+import Buttons from "../components/Buttons";
 
 const InvoiceCalculator = ({ products, setInvoices }) => {
   const calculateInvoices = (products) => {
@@ -92,11 +93,12 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
   }, []);
 
   return (
-    <div>
-      {/* <h2>Calculated Invoices</h2>
+    <div className="invoicestyle">
+
+      <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (
         <div key={index}>
-          <h3>Invoice {index + 1}</h3>
+          <h2>Invoice {index + 1}</h2>
           {invoice.descriptions.map((description, i) => (
             <div key={i}>
               <p>Description: {description}</p>
@@ -112,13 +114,10 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
           <hr />
         </div>
       ))}
-      <h3>Total: {total}</h3> */}
-      <h2>Calculated Invoices</h2>
-      {invoices.map((invoice, index) => (
-        <Invoice key={index} invoice={invoice} index={index} />
-      ))}
       <h3>Total: {total}</h3>
-      <button onClick={() => navigate("/")}>&lt; Go Back</button>
+      {/* <Invoice index={index} invoice={invoice} /> */}
+      <Buttons onClick={() => navigate("/")} text="Go Back" />
+      {/* <Button onClick={() => navigate("/")}>&lt; Go Back</button> */}
     </div>
   );
 };
