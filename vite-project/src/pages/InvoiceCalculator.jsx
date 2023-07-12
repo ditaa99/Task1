@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Invoice from "../components/Invoice";
 
 const InvoiceCalculator = ({ products, setInvoices }) => {
   const calculateInvoices = (products) => {
@@ -80,16 +82,18 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
   };
 
   const { invoices, total } = calculateInvoices(products);
+  const navigate = useNavigate();
 
   /*the useEffect hook is used to update the invoices state variable whenever it changes. It has two dependencies specified: 
   setInvoices and invoices. Whenever either of these dependencies changes, the effect will be triggered.*/
   useEffect(() => {
-    setInvoices(invoices);
-  }, [setInvoices, invoices]);
+    const initialInvoices = calculateInvoices(products);
+    setInvoices(initialInvoices.invoices);
+  }, []);
 
   return (
     <div>
-      <h2>Calculated Invoices</h2>
+      {/* <h2>Calculated Invoices</h2>
       {invoices.map((invoice, index) => (
         <div key={index}>
           <h3>Invoice {index + 1}</h3>
@@ -108,7 +112,13 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
           <hr />
         </div>
       ))}
+      <h3>Total: {total}</h3> */}
+      <h2>Calculated Invoices</h2>
+      {invoices.map((invoice, index) => (
+        <Invoice key={index} invoice={invoice} index={index} />
+      ))}
       <h3>Total: {total}</h3>
+      <button onClick={() => navigate("/")}>&lt; Go Back</button>
     </div>
   );
 };
