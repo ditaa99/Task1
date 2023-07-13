@@ -8,10 +8,8 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
     let subTotal = 0;
     let vat = 0;
     let total = 0;
-
     const invoices = [];
     let currentInvoice = null;
-
     for (let i = 0; i < products.length; i++) {
       const {
         description,
@@ -25,17 +23,14 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
       const vatAmount =
         ((productSubTotal - discountAmount) * vatPercentage) / 100;
       const totalPrice = productSubTotal + vatAmount;
-
       subTotal += productSubTotal;
       vat += vatAmount;
-
       let remainingQuantity = quantity;
-
       while (remainingQuantity > 0) {
         if (
           !currentInvoice ||
           currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50 ||
-          // currentInvoice.totalPrice.reduce((a, b) => a + b, 0) + totalPrice > 500 ||
+          currentInvoice.totalPrice.reduce((a, b) => a + b, 0) > 500 ||
           totalPrice > 500
         ) {
           // Create a new invoice if the current one is full or the price exceeds the limit
@@ -49,21 +44,12 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
           };
           invoices.push(currentInvoice);
         }
-
         const addToInvoice = Math.min(
           remainingQuantity,
           totalPrice > 500
             ? remainingQuantity
             : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0)
         );
-        // const addToInvoice = Math.min(
-        //   remainingQuantity,
-        //   currentInvoice.quantity.reduce((a, b) => a + b, 0) >= 50
-        //     ? 0
-        //     : 50 - currentInvoice.quantity.reduce((a, b) => a + b, 0),
-        //   totalPrice > 500 ? remainingQuantity : Infinity
-        // ); 
-
         currentInvoice.descriptions.push(description);
         currentInvoice.quantity.push(addToInvoice);
         currentInvoice.price.push(price);
@@ -72,15 +58,12 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
         );
         currentInvoice.vatAmount.push((vatAmount / quantity) * addToInvoice);
         currentInvoice.totalPrice.push((totalPrice / quantity) * addToInvoice);
-
         remainingQuantity -= addToInvoice;
       }
     }
-
     invoices.forEach((invoice) => {
       total += invoice.totalPrice.reduce((a, b) => a + b, 0);
     });
-
     return {
       invoices,
       subTotal,
@@ -100,15 +83,34 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
   }, []);
 
   return (
-    <div className="invoicestyle">
-      <h1>Calculated Invoices</h1>
+    <div>
+      {/* <h2>Calculated Invoices</h2>
       {invoices.map((invoice, index) => (
-        <Invoice index={index} invoice={invoice} />
+        <div key={index}>
+          <h3>Invoice {index + 1}</h3>
+          {invoice.descriptions.map((description, i) => (
+            <div key={i}>
+              <p>Description: {description}</p>
+              <p>Quantity: {invoice.quantity[i]}</p>
+              <p>Price: {invoice.price[i]}</p>
+              <p>Discount: {invoice.discountAmount[i]}</p>
+              <p>VAT: {invoice.vatAmount[i]}</p>
+              <p>Total: {invoice.totalPrice[i]}</p>
+              <hr />
+            </div>
+          ))}
+          <h4>Invoice total: {invoice.totalPrice.reduce((a, b) => a + b)}</h4>
+          <hr />
+        </div>
+      ))}
+      <h3>Total: {total}</h3> */}
+      <h2>Calculated Invoices</h2>
+      {invoices.map((invoice, index) => (
+        <Invoice key={index} invoice={invoice} index={index} />
       ))}
       <h3>Total: {total}</h3>
       <Buttons onClick={() => navigate("/")} text="Go Back" />
     </div>
   );
 };
-
 export default InvoiceCalculator;
