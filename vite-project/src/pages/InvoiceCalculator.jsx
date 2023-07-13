@@ -83,32 +83,12 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
   }, []);
 
   return (
-    <div>
-      {/* <h2>Calculated Invoices</h2>
-      {invoices.map((invoice, index) => (
-        <div key={index}>
-          <h3>Invoice {index + 1}</h3>
-          {invoice.descriptions.map((description, i) => (
-            <div key={i}>
-              <p>Description: {description}</p>
-              <p>Quantity: {invoice.quantity[i]}</p>
-              <p>Price: {invoice.price[i]}</p>
-              <p>Discount: {invoice.discountAmount[i]}</p>
-              <p>VAT: {invoice.vatAmount[i]}</p>
-              <p>Total: {invoice.totalPrice[i]}</p>
-              <hr />
-            </div>
-          ))}
-          <h4>Invoice total: {invoice.totalPrice.reduce((a, b) => a + b)}</h4>
-          <hr />
-        </div>
-      ))}
-      <h3>Total: {total}</h3> */}
-      <h2>Calculated Invoices</h2>
+    <div className="invoicestyle">
+      <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (
         <Invoice key={index} invoice={invoice} index={index} />
       ))}
-      <h3>Total: {total}</h3>
+      <h2>Total: {total}</h2>
       <Buttons onClick={() => navigate("/")} text="Go Back" />
     </div>
   );

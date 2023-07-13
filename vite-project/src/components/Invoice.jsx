@@ -17,7 +17,7 @@ const Invoice = (props) => {
           <hr />
         </div>
       ))}
-      <h4>Invoice total: {invoice.totalPrice.reduce((a, b) => a + b)}</h4>
+      <h3>Invoice total: {invoice.totalPrice.reduce((a, b) => a + b)}</h3>
       <hr />
     </div>
 
