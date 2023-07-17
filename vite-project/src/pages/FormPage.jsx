@@ -8,39 +8,34 @@ const FormPage = () => {
 
   useEffect(() => {
     const handleEffects = () => {
+      // function to handle effects when tabs are clicked
       $(".tabs .tab").click(function () {
         if ($(this).hasClass("login")) {
-          $(".tabs .tab").removeClass("active");
-          $(this).addClass("active");
-          $(".cont").hide();
-          $(".login-cont").show();
+          // if login tab is clicked
+          $(".tabs .tab").removeClass("active"); // remove active class from all tabs, affects looks
+          $(this).addClass("active"); // add active class to login tab
+          $(".cont").hide(); // hide all content
+          $(".login-cont").show(); // show login content
         }
         if ($(this).hasClass("signup")) {
-          $(".tabs .tab").removeClass("active");
-          $(this).addClass("active");
-          $(".cont").hide();
-          $(".signup-cont").show();
+          // if signup tab is clicked
+          $(".tabs .tab").removeClass("active"); // remove active class from all tabs
+          $(this).addClass("active"); // add active class to signup tab
+          $(".cont").hide(); // hide all content
+          $(".signup-cont").show(); // show signup content
         }
       });
-      $(".container .bg").mousemove(function (e) {
+      $(".container").mousemove(function (e) {
+        // function to handle mouse movement over background
         var amountMovedX = (e.pageX * -1) / 30;
         var amountMovedY = (e.pageY * -1) / 9;
-        $(this).css(
-          "background-position",
-          amountMovedX + "px " + amountMovedY + "px"
-        );
       });
-    };
 
-    // Check if jQuery is available
-    if (typeof $ === "undefined") {
-      const script = document.createElement("script");
-      script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
-      script.onload = handleEffects;
-      document.body.appendChild(script);
-    } else {
-      handleEffects();
-    }
+      // Set login tab as active by default
+      $(".tabs .tab.login").addClass("active");
+      $(".cont").hide();
+      $(".login-cont").show();
+    };
   }, []);
 
   return (
@@ -49,10 +44,10 @@ const FormPage = () => {
         <h1 className="title">Pleas Log in or Sing up</h1>
         <div className="tabs">
           <span className="tab login active">
-            <a href="#login">Log in</a>
+            <a>Log in</a>
           </span>
           <span className="tab signup">
-            <a href="#signup">Sign up</a>
+            <a>Sign up</a>
           </span>
         </div>
         <div className="content">
@@ -64,7 +59,6 @@ const FormPage = () => {
           </div>
         </div>
       </article>
-      <div className="half bg"></div>
     </section>
   );
 };

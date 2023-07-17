@@ -59,19 +59,6 @@ button:hover {
 
 /*Forms page */
 
-input {
-  padding: 0.7rem 1.5rem;
-  font-size: 1.2rem;
-  border-radius: 25px;
-  border: 1px solid rgba(85, 83, 83);
-  background: rgba(255, 255, 255, 0.1);
-  color: #260864;
-}
-
-.error {
-  color: red;
-}
-
 /* @import url("https://fonts.googleapis.com/css?family=Lato:400,700"); */
 
 * {
@@ -138,23 +125,9 @@ input {
   transition: all 0.1s ease-in-out;
 }
 
-/* .tab.active,
-.tab:hover {
-  a {
-    color: #263238;
-  }
-} */
-
 .tab.active {
   border-bottom: 1px solid #263238;
 }
-
-/* .content {
-  form {
-    position: relative;
-    height: 287px;
-  }
-} */
 
 /* label,
 input,
@@ -177,6 +150,19 @@ label {
   &:not([for="remember"]) {
     display: none;
   }
+}
+
+input {
+  padding: 0.7rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  border: 1px solid rgba(85, 83, 83);
+  background: rgba(255, 255, 255, 0.1);
+  color: #260864;
+}
+
+.error {
+  color: red;
 }
 
 input.inpt {
@@ -226,100 +212,4 @@ input.submit:hover {
 
 input:focus {
   outline: none;
-}
-
-.checkbox {
-  margin-top: 4px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 0;
-  height: 0;
-  margin: 17px -1px;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.checkbox + label {
-  vertical-align: middle;
-  display: inline-block;
-  width: 50%;
-}
-
-.checkbox + label:before {
-  content: "\A";
-  color: #999999;
-  font-family: Verdana;
-  font-weight: bold;
-  font-size: 8px;
-  line-height: 10px;
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  border-radius: 2px;
-  background: transparent;
-  border: 1px solid #d9d9d9;
-  width: 11px;
-  height: 11px;
-  margin: -2px 8px 0 0;
-}
-
-.checkbox:checked + label:before {
-  content: "✓";
-}
-
-.submit-wrap {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-a.more {
-  font-size: 12px;
-  display: block;
-  margin-top: 20px;
-  text-align: center;
-  text-decoration: none;
-  color: #999999;
-}
-
-.credits {
-  display: block;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: #999999;
-  font-size: 14px;
-  margin: 0 10px 10px 0;
-}
-
-a.credits {
-  opacity: 0.8;
-  color: inherit;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    margin-left: -320px;
-  }
-  100% {
-    opacity: 1;
-    margin-left: 0px;
-  }
-}
-
-@-webkit-keyframes slideIn {
-  0% {
-    opacity: 0;
-    margin-left: -320px;
-  }
-  100% {
-    opacity: 1;
-    margin-left: 0px;
-  }
 }
