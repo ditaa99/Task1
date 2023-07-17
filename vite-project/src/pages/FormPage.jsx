@@ -36,12 +36,22 @@ const FormPage = () => {
       $(".cont").hide();
       $(".login-cont").show();
     };
+
+    // Check if jQuery is available
+    if (typeof $ === "undefined") {
+      const script = document.createElement("script");
+      script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+      script.onload = handleEffects;
+      document.body.appendChild(script);
+    } else {
+      handleEffects();
+    }
   }, []);
 
   return (
     <section className="container">
       <article className="half">
-        <h1 className="title">Pleas Log in or Sing up</h1>
+        <h1 className="title">Please Log in or Sing up</h1>
         <div className="tabs">
           <span className="tab login active">
             <a>Log in</a>
