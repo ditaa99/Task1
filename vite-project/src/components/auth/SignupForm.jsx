@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Buttons from "../Buttons";
 
 const SignupForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -8,6 +10,7 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,6 +24,7 @@ const SignupForm = () => {
       navigate("/home");
     } catch (error) {
       // Handle error
+      console.error("Error signing up:", error);
     }
   };
 
@@ -58,7 +62,7 @@ const SignupForm = () => {
           onChange={(event) => setConfirmPassword(event.target.value)}
           placeholder="Confirm Password"
         />
-        <button type="submit">Sign Up</button>
+        <Buttons type="submit" text="Sign Up" />
       </form>
     </>
   );

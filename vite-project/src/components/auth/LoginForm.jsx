@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebaseConfig";
+import Buttons from "../Buttons";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ const LoginForm = () => {
     } catch (error) {
       // console.log(error);
       setError("Email or password is incorrect");
+      console.error("Error logging in:", error);
     }
   };
 
@@ -40,7 +42,7 @@ const LoginForm = () => {
           placeholder="Your password"
         />
         <label htmlFor="password">Your password</label>
-        <button type="submit">Sign In</button>
+        <Buttons type="submit" text="Log In" />
       </form>
     </>
   );

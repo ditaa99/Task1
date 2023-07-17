@@ -51,7 +51,7 @@ const FormPage = () => {
   return (
     <section className="container">
       <article className="half">
-        <h1 className="title">Please Log in or Sing up</h1>
+        <h1 className="title">Please Log in or Sign up</h1>
         <div className="tabs">
           <span className="tab login active">
             <a>Log in</a>

@@ -129,6 +129,10 @@ button:hover {
   border-bottom: 1px solid #263238;
 }
 
+.tab.active a {
+  color: #263238;
+}
+
 /* label,
 input,
 .more {

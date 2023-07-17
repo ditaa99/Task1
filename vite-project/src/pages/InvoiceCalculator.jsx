@@ -89,7 +89,7 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
         <Invoice key={index} invoice={invoice} index={index} />
       ))}
       <h2>Total: {total}</h2>
-      <Buttons onClick={() => navigate("/")} text="Go Back" />
+      <Buttons onClick={() => navigate("/home")} text="Go Back" />
     </div>
   );
 };
