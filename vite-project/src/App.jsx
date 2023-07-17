@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import InvoiceCalculator from "./pages/InvoiceCalculator";
+import FormPage from "./pages/FormPage";
 
 const App = () => {
   const [products, setProducts] = useState([
@@ -13,8 +14,9 @@ const App = () => {
   return (
     <div>
       <Routes>
+        <Route path="/form" element={<FormPage />} />
         <Route
-          path="/"
+          path="/home"
           element={<HomePage products={products} setProducts={setProducts} />}
         />
         <Route
