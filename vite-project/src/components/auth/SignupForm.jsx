@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import { updateProfile } from 'firebase/auth';
 import Buttons from "../Buttons";
 
 const SignupForm = () => {
@@ -24,7 +23,6 @@ const SignupForm = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/home");
     } catch (error) {
-      // Handle error
       console.error("Error signing up:", error);
     }
   };

@@ -13,7 +13,6 @@ const LoginForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const auth = getAuth(app);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
