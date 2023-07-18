@@ -163,7 +163,7 @@ input {
   border: 1px solid rgba(85, 83, 83);
   background: rgba(255, 255, 255, 0.1);
   color: #260864;
-  margin-top: .25rem;
+  margin-top: 0.25rem;
 }
 
 .error {
@@ -219,9 +219,19 @@ input:focus {
   outline: none;
 }
 
-.top{
+.top {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0.5rem 1rem;
+}
+
+.top button {
+  background-color: #e4e0e0;
+  color: rgb(177, 4, 4);
+}
+
+.top button:hover {
+  background-color: #b1b0b0;
+  border-color: rgb(177, 4, 4);
 }

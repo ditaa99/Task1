@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import Invoice from "../components/Invoice";
 import Buttons from "../components/Buttons";
 
 const InvoiceCalculator = ({ products, setInvoices }) => {
+  const auth = getAuth();
+
   const calculateInvoices = (products) => {
     let subTotal = 0;
     let vat = 0;
@@ -82,8 +85,36 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
     setInvoices(initialInvoices.invoices);
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      setIsLoggedIn(false);
+      navigate("/form");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        setIsLoggedIn(false);
+        navigate("/form");
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [setIsLoggedIn, navigate]);
+
   return (
     <div className="invoicestyle">
+      <div className="top">
+        {/* {isLoggedIn && <p>Welcome, {auth.currentUser.displayName}</p>} */}
+        <Buttons onClick={handleLogout} text="Log Out" />
+      </div>
+
       <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (
         <Invoice key={index} invoice={invoice} index={index} />
