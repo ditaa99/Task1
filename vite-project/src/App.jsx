@@ -28,7 +28,7 @@ const App = () => {
     <div>
       <Routes>
         <Route
-          path="/form"
+          path="/"
           element={<FormPage setIsLoggedIn={setIsLoggedIn} />} // Pass setIsLoggedIn prop
         />
         <Route
@@ -42,7 +42,7 @@ const App = () => {
                 setIsLoggedIn={setIsLoggedIn} // Pass setIsLoggedIn prop
               />
             ) : (
-              <Navigate to="/form" />
+              <Navigate to="/" />
             )
           }
         />
@@ -59,7 +59,7 @@ const App = () => {
                 setIsLoggedIn={setIsLoggedIn} // Pass setIsLoggedIn prop
               />
             ) : (
-              <Navigate to="/form" />
+              <Navigate to="/" />
             )
           }
         />
