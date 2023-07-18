@@ -95,7 +95,7 @@ const InvoiceCalculator = ({
     try {
       await auth.signOut();
       setIsLoggedIn(false);
-      navigate("/form");
+      navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
     }

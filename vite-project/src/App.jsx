@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-// import { app } from './components/auth/firebaseConfig';
 import HomePage from "./pages/HomePage";
 import InvoiceCalculator from "./pages/InvoiceCalculator";
 import FormPage from "./pages/FormPage";
