@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Invoice from "../components/Invoice";
 import Buttons from "../components/Buttons";
+import Top from "../components/top";
 
-const InvoiceCalculator = ({ products, setInvoices }) => {
+const InvoiceCalculator = ({ products, setInvoices, isLoggedIn, setIsLoggedIn  }) => {
   const auth = getAuth();
 
   const calculateInvoices = (products) => {
@@ -110,10 +111,8 @@ const InvoiceCalculator = ({ products, setInvoices }) => {
 
   return (
     <div className="invoicestyle">
-      <div className="top">
-        {/* {isLoggedIn && <p>Welcome, {auth.currentUser.displayName}</p>} */}
-        <Buttons onClick={handleLogout} text="Log Out" />
-      </div>
+
+      <Top onClick={handleLogout} text="Log Out" /> 
 
       <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
 // import { app } from './components/auth/firebaseConfig';
-import HomePage from "./pages/HomePage";
-import InvoiceCalculator from "./pages/InvoiceCalculator";
-import FormPage from "./pages/FormPage";
+import HomePage from './pages/HomePage';
+import InvoiceCalculator from './pages/InvoiceCalculator';
+import FormPage from './pages/FormPage';
 
 const App = () => {
   const auth = getAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([
-    { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
+    { description: '', quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
   ]);
   const [invoices, setInvoices] = useState([]);
 
@@ -53,6 +53,7 @@ const App = () => {
             isLoggedIn ? (
               <InvoiceCalculator
                 products={products}
+                setInvoices={setInvoices}
                 setProducts={setProducts}
                 isLoggedIn={isLoggedIn} // Pass isLoggedIn prop
                 setIsLoggedIn={setIsLoggedIn} // Pass setIsLoggedIn prop
