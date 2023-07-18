@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import Input from "../components/Input";
 import Buttons from "../components/Buttons";
 
-const HomePage = ({ products, setProducts }) => {
+const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
+  const auth = getAuth();
 
   const handleFieldChange = (index, field, value) => {
     const updatedProducts = [...products];
@@ -25,8 +27,36 @@ const HomePage = ({ products, setProducts }) => {
     setProducts(updatedProducts);
   };
 
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      setIsLoggedIn(false);
+      navigate("/form");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        setIsLoggedIn(false);
+        navigate("/form");
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [setIsLoggedIn, navigate]);
+
   return (
     <div className={products.length === 0 ? "homepage pempty" : "homepage"}>
+      <div className="top">
+        {/* {isLoggedIn && <p>Welcome, {auth.currentUser.displayName}</p>} */}
+        <Buttons onClick={handleLogout} text="Log Out" />
+      </div>
+
       <h1>Invoice Calculator</h1>
 
       <h2>Product List</h2>
@@ -101,7 +131,6 @@ const HomePage = ({ products, setProducts }) => {
 
       <Buttons onClick={handleAddProduct} text="Add Product" />
       <Buttons onClick={() => navigate("/invoices")} text="Calculate Invoice" />
-
     </div>
   );
 };
