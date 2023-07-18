@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Input from "../components/Input";
 import Buttons from "../components/Buttons";
+import Top from "../components/top";
 
 const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -52,10 +53,7 @@ const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div className={products.length === 0 ? "homepage pempty" : "homepage"}>
-      <div className="top">
-        {/* {isLoggedIn && <p>Welcome, {auth.currentUser.displayName}</p>} */}
-        <Buttons onClick={handleLogout} text="Log Out" />
-      </div>
+      <Top onClick={handleLogout} />
 
       <h1>Invoice Calculator</h1>
 

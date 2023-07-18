@@ -5,7 +5,12 @@ import Invoice from "../components/Invoice";
 import Buttons from "../components/Buttons";
 import Top from "../components/top";
 
-const InvoiceCalculator = ({ products, setInvoices, isLoggedIn, setIsLoggedIn  }) => {
+const InvoiceCalculator = ({
+  products,
+  setInvoices,
+  isLoggedIn,
+  setIsLoggedIn,
+}) => {
   const auth = getAuth();
 
   const calculateInvoices = (products) => {
@@ -111,8 +116,7 @@ const InvoiceCalculator = ({ products, setInvoices, isLoggedIn, setIsLoggedIn  }
 
   return (
     <div className="invoicestyle">
-
-      <Top onClick={handleLogout} text="Log Out" /> 
+      <Top onClick={handleLogout} />
 
       <h1>Calculated Invoices</h1>
       {invoices.map((invoice, index) => (

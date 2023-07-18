@@ -3,7 +3,7 @@ import Buttons from "./Buttons";
 import "../index.css";
 
 const Top = (props) => {
-  const { className = "top", onClick, text } = props;
+  const { className, onClick, text } = props;
 
   return (
     <div className="top">

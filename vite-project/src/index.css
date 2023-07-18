@@ -219,6 +219,7 @@ input:focus {
   outline: none;
 }
 
+/* Top component styling*/
 .top {
   display: flex;
   justify-content: flex-end;
