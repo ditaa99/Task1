@@ -24,11 +24,7 @@ const FormPage = () => {
           </span>
         </div>
         <div className="content">
-          {activeTab === "login" ? (
-            <LoginForm />
-          ) : (
-            <SignupForm />
-          )}
+          {activeTab === "login" ? <LoginForm /> : <SignupForm />}
         </div>
       </article>
     </section>

@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import Buttons from "../Buttons";
 
 const SignupForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (values) => {
+    const { firstName, lastName, email, password, confirmPassword } = values;
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -27,43 +23,53 @@ const SignupForm = () => {
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    phoneNumber: Yup.string(),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
+  });
+
   return (
-    <>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
+    <Formik
+      initialValues={{
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      }}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      <Form>
+        <ErrorMessage name="firstName" component="p" className="error" />
+        <Field type="text" name="firstName" placeholder="Your first name" />
+        <ErrorMessage name="lastName" component="p" className="error" />
+        <Field type="text" name="lastName" placeholder="Your last name" />
+        <Field
           type="text"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-          placeholder="Your first name"
+          name="phoneNumber"
+          placeholder="Phone number (optional)"
         />
-        <input
-          type="text"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-          placeholder="Your last name"
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Your email"
-        />
-        <input
+        <ErrorMessage name="email" component="p" className="error" />
+        <Field type="email" name="email" placeholder="Your email" />
+        <ErrorMessage name="password" component="p" className="error" />
+        <Field type="password" name="password" placeholder="Your password" />
+        <ErrorMessage name="confirmPassword" component="p" className="error" />
+        <Field
           type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Your password"
-        />
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          placeholder="Confirm Password"
+          name="confirmPassword"
+          placeholder="Confirm password"
         />
         <Buttons type="submit" text="Sign Up" />
-      </form>
-    </>
+      </Form>
+    </Formik>
   );
 };
 
