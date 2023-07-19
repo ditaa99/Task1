@@ -5,12 +5,6 @@ import SignupForm from "../components/auth/SignupForm";
 
 const FormPage = () => {
   const [activeTab, setActiveTab] = useState("login");
-  const navigate = useNavigate();
-
-  const handleTabClick = (e) => {
-    const tabName = e.target.className;
-    setActiveTab(tabName);
-  };
 
   return (
     <section className="container">
