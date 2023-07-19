@@ -1,17 +1,15 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-
-  margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
 body {
-  margin: 0;
+  /* margin: 0; */
   display: flex;
+  flex-direction: column;
   place-items: center;
-  min-width: 320px;
+  min-width: 100vw;
   min-height: 100vh;
 }
 
@@ -41,16 +39,6 @@ button:hover {
 }
 .del:hover {
   border-color: rgb(177, 4, 4);
-}
-
-/* Invoices Page*/
-
-.invoicestyle {
-  margin-left: 20rem;
-}
-
-.pempty {
-  margin-left: 20rem;
 }
 
 /*Forms page */
