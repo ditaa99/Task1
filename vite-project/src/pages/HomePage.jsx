@@ -5,9 +5,11 @@ import Input from "../components/Input";
 import Buttons from "../components/Buttons";
 import Top from "../components/Top";
 
-const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
+const HomePage = ({ products, setProducts, isLoggedIn =true, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const auth = getAuth();
+
+  
 
   const handleFieldChange = (index, field, value) => {
     const updatedProducts = [...products];
@@ -42,7 +44,7 @@ const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         setIsLoggedIn(false);
-        navigate("/form");
+        navigate("/");
       }
     });
 
@@ -50,6 +52,13 @@ const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
       unsubscribe();
     };
   }, [setIsLoggedIn, navigate]);
+
+// navigate('/home', { replace: true });
+  // if (!isLoggedIn) {
+  //   navigate("/");
+  // } else {
+  //   navigate("/home");
+  // }
 
   return (
     <div className={products.length === 0 ? "homepage pempty" : "homepage"}>
