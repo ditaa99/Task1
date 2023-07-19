@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Input from "../components/Input";
 import Buttons from "../components/Buttons";
-import Top from "../components/top";
+import Top from "../components/Top";
 
 const HomePage = ({ products, setProducts, isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Invoice from "../components/Invoice";
 import Buttons from "../components/Buttons";
-import Top from "../components/top";
+import Top from "../components/Top";
 
 const InvoiceCalculator = ({
   products,
