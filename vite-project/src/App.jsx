@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import HomePage from "./pages/HomePage";
 import InvoiceCalculator from "./pages/InvoiceCalculator";
@@ -12,6 +12,24 @@ const App = () => {
     { description: "", quantity: 0, price: 0.0, discount: 0.0, vat: 0 },
   ]);
   const [invoices, setInvoices] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Store the current page in localStorage when the location changes
+    if (isLoggedIn) {
+      localStorage.setItem("currentPage", location.pathname);
+    }
+  }, [location, isLoggedIn]);
+
+  useEffect(() => {
+    // Check if there is a value stored in localStorage when the component mounts
+    const currentPage = localStorage.getItem("currentPage");
+    if (currentPage) {
+      // Navigate to the stored page
+      navigate(currentPage);
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -47,15 +65,14 @@ const App = () => {
         />
         <Route
           path="/invoices"
-          // element={<InvoiceCalculator products={products} setInvoices={setInvoices} />}
           element={
             isLoggedIn ? (
               <InvoiceCalculator
                 products={products}
                 setInvoices={setInvoices}
                 setProducts={setProducts}
-                isLoggedIn={isLoggedIn} // Pass isLoggedIn prop
-                setIsLoggedIn={setIsLoggedIn} // Pass setIsLoggedIn prop
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn} 
               />
             ) : (
               <Navigate to="/" />

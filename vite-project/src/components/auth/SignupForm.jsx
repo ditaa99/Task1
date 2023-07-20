@@ -18,6 +18,7 @@ const SignupForm = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/home");
+      console.log("User signed up")
     } catch (error) {
       console.error("Error signing up:", error);
     }

@@ -15,6 +15,7 @@ const LoginForm = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
+      console.log("User signed in")
     } catch (error) {
       console.error("Error logging in:", error);
     }

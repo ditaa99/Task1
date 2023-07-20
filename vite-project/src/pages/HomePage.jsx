@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Input from "../components/Input";
@@ -8,8 +8,6 @@ import Top from "../components/Top";
 const HomePage = ({ products, setProducts, isLoggedIn =true, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const auth = getAuth();
-
-  
 
   const handleFieldChange = (index, field, value) => {
     const updatedProducts = [...products];
@@ -39,26 +37,6 @@ const HomePage = ({ products, setProducts, isLoggedIn =true, setIsLoggedIn }) =>
       console.error("Error logging out:", error);
     }
   };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        setIsLoggedIn(false);
-        navigate("/");
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [setIsLoggedIn, navigate]);
-
-// navigate('/home', { replace: true });
-  // if (!isLoggedIn) {
-  //   navigate("/");
-  // } else {
-  //   navigate("/home");
-  // }
 
   return (
     <div className={products.length === 0 ? "homepage pempty" : "homepage"}>
